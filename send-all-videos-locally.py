@@ -21,7 +21,7 @@ directory = os.getenv("DIRECTORY")
 def get_token(userToken):
     data = {"token": userToken}
     headers = {"Content-Type": "application/json"}
-    response = requests.post(url_auth, json=data, headers=headers, verify=False)
+    response = requests.post(url_auth, json=data, headers=headers, verify=False, timeout=(10, 300))
 
     if response.status_code == 200:
         try:
@@ -47,10 +47,19 @@ def send_file(filePath, token):
 
         print(f"Sending file {file_name} ... ")
 
-        response = requests.post(url_api + "/media/upload", files=files, data=data, headers=headers, verify=False)
-        
+        response = requests.post(url_api + "/media/upload", files=files, data=data, headers=headers, verify=False, stream=True, timeout=(300))
+        print('>>>>>>>>>>>> response')
+        print(response.content)
+
         if response.status_code in [200, 201]:
             print(f"Upload of file {file_name} completed successfully.")
+
+            try:
+                os.remove(filePath)
+                print(f"File {file_name} deleted successfully.")
+            except Exception as e:
+                print(f"Error deleting file {file_name}: {e}")
+
         else:
             print(f"Failed to send {file_name}. Status: {response.status_code}, Response: {response.text}")
 

@@ -1,2 +1,2 @@
 #!/bin/sh
-python3.10 send_all_videos_locally.py
+python3.10 -B app.py

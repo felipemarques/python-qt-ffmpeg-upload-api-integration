@@ -1,5 +1,14 @@
+# Requirements
+For this project we need to use Python 3.10+
+
+# Install dependencies
+./setup.sh
+
 # How to use
+
 You need to get your USER_TOKEN from MM Media Manager
+
+./scripts/run.sh
 
 # Variables
 
